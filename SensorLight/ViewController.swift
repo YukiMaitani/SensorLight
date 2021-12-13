@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     let link = UIImageView()
+    let guardian = UIImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,18 @@ class ViewController: UIViewController {
         link.center = CGPoint(x:screenWidth/2, y:screenHeight/2)
         link.isUserInteractionEnabled = true
         self.view.addSubview(link)
+        
+        guardian.image = UIImage(named: "FlyingGuardian")
+        guardian.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        guardian.center = CGPoint(x: screenWidth/2, y: screenHeight/3)
+        self.view.addSubview(guardian)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touchEvent = touches.first!
+        let newx = touchEvent.location(in: self.view).x
+        let newy = touchEvent.location(in: self.view).y
+        link.center = CGPoint(x:newx,y:newy)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -28,11 +41,7 @@ class ViewController: UIViewController {
         let newx = touchEvent.location(in: self.view).x
         let newy = touchEvent.location(in: self.view).y
         print("x:\(newx),y:\(newy)")
-        var viewFrame:CGRect = link.frame
-        viewFrame.origin.x = newx
-        viewFrame.origin.y = newy
-        link.frame = viewFrame
-        self.view.addSubview(link)
+        link.center = CGPoint(x:newx,y:newy)
     }
 
 
