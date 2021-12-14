@@ -15,6 +15,11 @@ class ViewController: UIViewController {
     var screenHeight:CGFloat = 0
     let textLabel = UILabel()
 
+    //明るさ
+    var brightness:CGFloat = 0.0
+    @IBAction func brightValue(_ sender: UISlider) {
+        print(sender.value)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // link
@@ -43,14 +48,18 @@ class ViewController: UIViewController {
         textLabel.text = "サクテキチュウ"
         self.view.addSubview(textLabel)
         
+        brightness = UIScreen.main.brightness
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touchEvent = touches.first!
         let newx = touchEvent.location(in: self.view).x
         let newy = touchEvent.location(in: self.view).y
+        //コントローラーと切り分ける
+        guard newy > (screenHeight/7)+64 else{return}
         link.center = CGPoint(x:newx,y:newy)
-        if newx <= screenWidth/2+20 && newx >= screenWidth/2-10 && newy >= screenHeight/3+65 {
+        if newx <= screenWidth/2+80 && newx >= screenWidth/2-70 && newy >= screenHeight/3+65 {
             textLabel.text = "テキハッケン"
         }else{
             textLabel.text = "サクテキチュウ"
@@ -63,8 +72,10 @@ class ViewController: UIViewController {
         let newx = touchEvent.location(in: self.view).x
         let newy = touchEvent.location(in: self.view).y
         print("x:\(newx),y:\(newy),\(screenWidth/2+20),\(screenWidth/2-10),\(screenHeight/3+65)")
+        //コントローラーと切り分ける
+        guard newy > (screenHeight/7)+64 else{return}
         link.center = CGPoint(x:newx,y:newy)
-        if newx <= screenWidth/2+20 && newx >= screenWidth/2-10 && newy >= screenHeight/3+65 {
+        if newx < (screenWidth/2)+80 && newx > (screenWidth/2)-70 && newy >= screenHeight/3+65 {
             textLabel.text = "テキハッケン"
         }else{
             textLabel.text = "サクテキチュウ"
