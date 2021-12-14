@@ -16,6 +16,7 @@
 		6D54AB322764794200776048 /* SensorLightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D54AB312764794200776048 /* SensorLightTests.swift */; };
 		6D54AB3C2764794200776048 /* SensorLightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D54AB3B2764794200776048 /* SensorLightUITests.swift */; };
 		6D54AB3E2764794200776048 /* SensorLightUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D54AB3D2764794200776048 /* SensorLightUITestsLaunchTests.swift */; };
+		6D54AB4B2767F09100776048 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D54AB4A2767F09000776048 /* DrawView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		6D54AB372764794200776048 /* SensorLightUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SensorLightUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D54AB3B2764794200776048 /* SensorLightUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLightUITests.swift; sourceTree = "<group>"; };
 		6D54AB3D2764794200776048 /* SensorLightUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLightUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6D54AB4A2767F09000776048 /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				6D54AB232764794200776048 /* Assets.xcassets */,
 				6D54AB252764794200776048 /* LaunchScreen.storyboard */,
 				6D54AB282764794200776048 /* Info.plist */,
+				6D54AB4A2767F09000776048 /* DrawView.swift */,
 			);
 			path = SensorLight;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			files = (
 				6D54AB1F2764793D00776048 /* ViewController.swift in Sources */,
 				6D54AB1B2764793D00776048 /* AppDelegate.swift in Sources */,
+				6D54AB4B2767F09100776048 /* DrawView.swift in Sources */,
 				6D54AB1D2764793D00776048 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

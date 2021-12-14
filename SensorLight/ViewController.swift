@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // link
         let screenWidth:CGFloat = view.frame.size.width
         let screenHeight:CGFloat = view.frame.size.height
         link.image = UIImage(named: "Link")
@@ -22,10 +22,24 @@ class ViewController: UIViewController {
         link.isUserInteractionEnabled = true
         self.view.addSubview(link)
         
+        //guardian
         guardian.image = UIImage(named: "FlyingGuardian")
         guardian.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
         guardian.center = CGPoint(x: screenWidth/2, y: screenHeight/3)
         self.view.addSubview(guardian)
+        
+        //描写するためのboxを用意している。なので、frameでview全体を指定するのが望ましい
+        let drawView = DrawView(frame: self.view.bounds)
+        drawView.backgroundColor = UIColor.clear
+        self.view.addSubview(drawView)
+        
+        //テキスト
+        let textLabel = UILabel()
+        textLabel.frame = CGRect(x: screenWidth/2-100, y: screenHeight/3-100,width:200,height:20)
+        textLabel.textAlignment = NSTextAlignment.center
+        textLabel.text = "サクテキチュウ"
+        self.view.addSubview(textLabel)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
