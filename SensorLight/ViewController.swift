@@ -14,11 +14,21 @@ class ViewController: UIViewController {
     var screenWidth:CGFloat = 0
     var screenHeight:CGFloat = 0
     let textLabel = UILabel()
+    var drawView = DrawView()
 
     //明るさ
     var brightness:CGFloat = 0.0
     @IBAction func brightValue(_ sender: UISlider) {
-        print(sender.value)
+        brightness = CGFloat(sender.value)
+        UIScreen.main.brightness = brightness
+        if brightness > 0.4{
+            textLabel.text = "オヤスミチュウ"
+        }else{
+            textLabel.text = "サクテキチュウ"
+        }
+        //drawView.setRect(brightness: brightness)
+        //UIColor(red: 1, green: 0.5, blue: 0, alpha: 1-brightness).setFill()
+        //drawView.rectangle.fill()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +48,11 @@ class ViewController: UIViewController {
         self.view.addSubview(guardian)
         
         //描写するためのboxを用意している。なので、frameでview全体を指定するのが望ましい
-        let drawView = DrawView(frame: self.view.bounds)
+        drawView = DrawView(frame: self.view.bounds)
         drawView.backgroundColor = UIColor.clear
         self.view.addSubview(drawView)
+        //一番前にいると全体を覆っているため、スライダーが操作できなくなる
+        self.view.sendSubviewToBack(drawView)
         
         //テキスト
         textLabel.frame = CGRect(x: screenWidth/2-100, y: screenHeight/3-100,width:200,height:20)
@@ -59,6 +71,10 @@ class ViewController: UIViewController {
         //コントローラーと切り分ける
         guard newy > (screenHeight/7)+64 else{return}
         link.center = CGPoint(x:newx,y:newy)
+        guard brightness < 0.4 else{
+            textLabel.text = "オヤスミチュウ"
+            return
+        }
         if newx <= screenWidth/2+80 && newx >= screenWidth/2-70 && newy >= screenHeight/3+65 {
             textLabel.text = "テキハッケン"
         }else{
@@ -75,6 +91,10 @@ class ViewController: UIViewController {
         //コントローラーと切り分ける
         guard newy > (screenHeight/7)+64 else{return}
         link.center = CGPoint(x:newx,y:newy)
+        guard brightness < 0.4 else{
+            textLabel.text = "オヤスミチュウ"
+            return
+        }
         if newx < (screenWidth/2)+80 && newx > (screenWidth/2)-70 && newy >= screenHeight/3+65 {
             textLabel.text = "テキハッケン"
         }else{
