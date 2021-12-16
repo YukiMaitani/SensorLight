@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var screenHeight:CGFloat = 0
     let textLabel = UILabel()
     var drawView = DrawView()
+    var lightDrawView = UIView()
 
     //明るさ
     var brightness:CGFloat = 0.0
@@ -23,12 +24,10 @@ class ViewController: UIViewController {
         UIScreen.main.brightness = brightness
         if brightness > 0.4{
             textLabel.text = "オヤスミチュウ"
+            drawView.isHidden = true
         }else{
             textLabel.text = "サクテキチュウ"
         }
-        //drawView.setRect(brightness: brightness)
-        //UIColor(red: 1, green: 0.5, blue: 0, alpha: 1-brightness).setFill()
-        //drawView.rectangle.fill()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,9 +49,16 @@ class ViewController: UIViewController {
         //描写するためのboxを用意している。なので、frameでview全体を指定するのが望ましい
         drawView = DrawView(frame: self.view.bounds)
         drawView.backgroundColor = UIColor.clear
-        self.view.addSubview(drawView)
         //一番前にいると全体を覆っているため、スライダーが操作できなくなる
+        self.view.addSubview(drawView)
         self.view.sendSubviewToBack(drawView)
+        
+        //line
+        let lineDrawView = LineDrawView(frame: self.view.bounds)
+        lineDrawView.backgroundColor = UIColor.clear
+        self.view.addSubview(lineDrawView)
+        self.view.sendSubviewToBack(lineDrawView)
+        
         
         //テキスト
         textLabel.frame = CGRect(x: screenWidth/2-100, y: screenHeight/3-100,width:200,height:20)
@@ -73,12 +79,15 @@ class ViewController: UIViewController {
         link.center = CGPoint(x:newx,y:newy)
         guard brightness < 0.4 else{
             textLabel.text = "オヤスミチュウ"
+            drawView.isHidden = true
             return
         }
         if newx <= screenWidth/2+80 && newx >= screenWidth/2-70 && newy >= screenHeight/3+65 {
             textLabel.text = "テキハッケン"
+            drawView.isHidden = false
         }else{
             textLabel.text = "サクテキチュウ"
+            drawView.isHidden = true
         }
     }
     
@@ -93,12 +102,15 @@ class ViewController: UIViewController {
         link.center = CGPoint(x:newx,y:newy)
         guard brightness < 0.4 else{
             textLabel.text = "オヤスミチュウ"
+            drawView.isHidden = true
             return
         }
         if newx < (screenWidth/2)+80 && newx > (screenWidth/2)-70 && newy >= screenHeight/3+65 {
             textLabel.text = "テキハッケン"
+            drawView.isHidden = false
         }else{
             textLabel.text = "サクテキチュウ"
+            drawView.isHidden = true
         }
     }
 
