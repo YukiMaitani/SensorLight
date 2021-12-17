@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     let link = UIImageView()
+    let bokoblin = UIImageView()
     let guardian = UIImageView()
     //クラス内で使用するためインスタンス変数として定義
     var screenWidth:CGFloat = 0
@@ -16,6 +17,9 @@ class ViewController: UIViewController {
     let textLabel = UILabel()
     var drawView = DrawView()
     var lightDrawView = UIView()
+    //タッチしたとき有効になるようにデフォルトはfalse
+    var linkMove = false
+    var bokoblinMove = false
 
     //明るさ
     var brightness:CGFloat = 0.0
@@ -36,9 +40,16 @@ class ViewController: UIViewController {
         screenHeight = view.frame.size.height
         link.image = UIImage(named: "Link")
         link.frame = CGRect(x:0, y:0, width:128, height:128)
-        link.center = CGPoint(x:screenWidth/2, y:screenHeight/2)
+        link.center = CGPoint(x:screenWidth/6, y:screenHeight/6*5)
         link.isUserInteractionEnabled = true
         self.view.addSubview(link)
+        
+        //bokoblin
+        bokoblin.image = UIImage(named: "Bokoblin")
+        bokoblin.frame = CGRect(x: 0, y: 0, width: 128, height: 128)
+        bokoblin.center = CGPoint(x: screenWidth/6*5, y: screenHeight/6*5)
+        bokoblin.isUserInteractionEnabled = true
+        self.view.addSubview(bokoblin)
         
         //guardian
         guardian.image = UIImage(named: "FlyingGuardian")
@@ -67,27 +78,17 @@ class ViewController: UIViewController {
         self.view.addSubview(textLabel)
         
         brightness = UIScreen.main.brightness
-        
     }
     
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touchEvent = touches.first!
-        let newx = touchEvent.location(in: self.view).x
-        let newy = touchEvent.location(in: self.view).y
-        //コントローラーと切り分ける
-        guard newy > (screenHeight/7)+64 else{return}
-        link.center = CGPoint(x:newx,y:newy)
-        guard brightness < 0.4 else{
-            textLabel.text = "オヤスミチュウ"
-            drawView.isHidden = true
+        switch touches.first?.view?.frame{
+        case link.frame:
+            linkMove = true
+        case bokoblin.frame:
+            bokoblinMove = true
+        default:
             return
-        }
-        if newx <= screenWidth/2+80 && newx >= screenWidth/2-70 && newy >= screenHeight/3+65 {
-            textLabel.text = "テキハッケン"
-            drawView.isHidden = false
-        }else{
-            textLabel.text = "サクテキチュウ"
-            drawView.isHidden = true
         }
     }
     
@@ -96,16 +97,16 @@ class ViewController: UIViewController {
         //in:linkだと分身する？
         let newx = touchEvent.location(in: self.view).x
         let newy = touchEvent.location(in: self.view).y
-        print("x:\(newx),y:\(newy),\(screenWidth/2+20),\(screenWidth/2-10),\(screenHeight/3+65)")
         //コントローラーと切り分ける
         guard newy > (screenHeight/7)+64 else{return}
-        link.center = CGPoint(x:newx,y:newy)
+        if linkMove{link.center = CGPoint(x:newx,y:newy)}
+        if bokoblinMove{bokoblin.center = CGPoint(x: newx, y: newy)}
         guard brightness < 0.4 else{
             textLabel.text = "オヤスミチュウ"
             drawView.isHidden = true
             return
         }
-        if newx < (screenWidth/2)+80 && newx > (screenWidth/2)-70 && newy >= screenHeight/3+65 {
+        if link.frame.midX < (screenWidth/2)+80 && link.frame.midX > (screenWidth/2)-70 && link.frame.midY >= screenHeight/3+65 {
             textLabel.text = "テキハッケン"
             drawView.isHidden = false
         }else{
@@ -114,6 +115,10 @@ class ViewController: UIViewController {
         }
     }
 
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        linkMove = false
+        bokoblinMove = false
+    }
 
 }
 
