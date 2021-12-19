@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "ゼルダの伝説_リンク-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ゼルダの伝説_リンク.png",
+      "filename" : "zelda.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ゼルダの伝説_リンク-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
