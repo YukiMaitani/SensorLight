@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "ゼルダ_ボコブリン透過-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ゼルダ_ボコブリン透過.png",
+      "filename" : "bokoblin.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ゼルダ_ボコブリン透過-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
