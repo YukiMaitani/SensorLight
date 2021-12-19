@@ -17,10 +17,6 @@ class ViewController: UIViewController {
     let textLabel = UILabel()
     var drawView = DrawView()
     var lightDrawView = UIView()
-    //タッチしたとき有効になるようにデフォルトはfalse
-    var linkMove = false
-    var bokoblinMove = false
-
     //明るさ
     var brightness:CGFloat = 0.0
     @IBAction func brightValue(_ sender: UISlider) {
@@ -35,30 +31,17 @@ class ViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // link
+        //スクリーンサイズ
         screenWidth = view.frame.size.width
         screenHeight = view.frame.size.height
-        link.image = UIImage(named: "Link")
-        link.frame = CGRect(x:0, y:0, width:128, height:128)
-        link.center = CGPoint(x:screenWidth/6, y:screenHeight/6*5)
-        link.isUserInteractionEnabled = true
-        self.view.addSubview(link)
-        
-        //bokoblin
-        bokoblin.image = UIImage(named: "Bokoblin")
-        bokoblin.frame = CGRect(x: 0, y: 0, width: 128, height: 128)
-        bokoblin.center = CGPoint(x: screenWidth/6*5, y: screenHeight/6*5)
-        bokoblin.isUserInteractionEnabled = true
-        self.view.addSubview(bokoblin)
-        
-        //guardian
-        guardian.image = UIImage(named: "FlyingGuardian")
-        guardian.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
-        guardian.center = CGPoint(x: screenWidth/2, y: screenHeight/3)
-        self.view.addSubview(guardian)
+        //画像セット
+        setImageView(imageView: link, name: "Link",width:128,height: 128,x: screenWidth/6, y: screenHeight/6*5, touchEvent: true)
+        setImageView(imageView: bokoblin, name: "Bokoblin", width: 128, height: 128, x: screenWidth/6*5, y: screenHeight/6*5, touchEvent: true)
+        setImageView(imageView: guardian, name: "FlyingGuardian", width: 150, height: 150, x: screenWidth/2, y: screenHeight/3, touchEvent: false)
         
         //描写するためのboxを用意している。なので、frameでview全体を指定するのが望ましい
         drawView = DrawView(frame: self.view.bounds)
+        drawView.guardian = guardian
         drawView.backgroundColor = UIColor.clear
         //一番前にいると全体を覆っているため、スライダーが操作できなくなる
         self.view.addSubview(drawView)
@@ -70,7 +53,6 @@ class ViewController: UIViewController {
         self.view.addSubview(lineDrawView)
         self.view.sendSubviewToBack(lineDrawView)
         
-        
         //テキスト
         textLabel.frame = CGRect(x: screenWidth/2-100, y: screenHeight/3-100,width:200,height:20)
         textLabel.textAlignment = NSTextAlignment.center
@@ -80,16 +62,12 @@ class ViewController: UIViewController {
         brightness = UIScreen.main.brightness
     }
     
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        switch touches.first?.view?.frame{
-        case link.frame:
-            linkMove = true
-        case bokoblin.frame:
-            bokoblinMove = true
-        default:
-            return
-        }
+    func setImageView(imageView:UIImageView,name:String,width:Int,height:Int,x:CGFloat,y:CGFloat,touchEvent:Bool){
+        imageView.image = UIImage(named: name)
+        imageView.frame = CGRect(x:0, y:0, width:width, height:height)
+        imageView.center = CGPoint(x:x, y:y)
+        imageView.isUserInteractionEnabled = touchEvent
+        self.view.addSubview(imageView)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -97,16 +75,18 @@ class ViewController: UIViewController {
         //in:linkだと分身する？
         let newx = touchEvent.location(in: self.view).x
         let newy = touchEvent.location(in: self.view).y
+        let linkHeight = link.frame.height
+        let linkWidth = link.frame.width
         //コントローラーと切り分ける
-        guard newy > (screenHeight/7)+64 else{return}
-        if linkMove{link.center = CGPoint(x:newx,y:newy)}
-        if bokoblinMove{bokoblin.center = CGPoint(x: newx, y: newy)}
+        guard newy > (screenHeight/7)+linkHeight/2 else{return}
+        if touchEvent.view == link{link.center = CGPoint(x:newx,y:newy)}
+        if touchEvent.view == bokoblin{bokoblin.center = CGPoint(x: newx, y: newy)}
         guard brightness < 0.4 else{
             textLabel.text = "オヤスミチュウ"
             drawView.isHidden = true
             return
         }
-        if link.frame.midX < (screenWidth/2)+80 && link.frame.midX > (screenWidth/2)-70 && link.frame.midY >= screenHeight/3+65 {
+        if link.frame.midX < (screenWidth/2)+linkWidth/5*3 && link.frame.midX > (screenWidth/2)-linkWidth/5*3 && link.frame.midY >= screenHeight/3+65 {
             textLabel.text = "テキハッケン"
             drawView.isHidden = false
         }else{
@@ -115,10 +95,4 @@ class ViewController: UIViewController {
         }
     }
 
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        linkMove = false
-        bokoblinMove = false
-    }
-
 }
-
